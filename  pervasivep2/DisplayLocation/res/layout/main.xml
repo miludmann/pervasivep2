@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<TextView android:id="@+id/TextView01" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Longitude: "></TextView>
+	
+	<TextView android:id="@+id/TextView02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
+	
+	<TextView android:id="@+id/TextView03" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Latitude: "></TextView>
+	
+	<TextView android:id="@+id/TextView04" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
+	
+		<TextView android:id="@+id/TextView05" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Status: "></TextView>
+	
+	<TextView android:id="@+id/TextView06" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
+	
+	<Button  android:id="@+id/my_button"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:text="Close App"></Button>
+
+
+</LinearLayout>
