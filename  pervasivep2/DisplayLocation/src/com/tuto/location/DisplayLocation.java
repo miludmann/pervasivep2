@@ -1,6 +1,10 @@
 package com.tuto.location;
 
-import com.tuto.location.NumberPicker.OnChangedListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,11 +12,14 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.tuto.location.NumberPicker.OnChangedListener;
 
 public class DisplayLocation extends Activity {
 	protected Button closeApp;
@@ -44,10 +51,32 @@ public class DisplayLocation extends Activity {
         Location location = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         closeApp.setOnClickListener(new OnClickListener() {
-
-			@Override
+        	
+        	/*
+        	 * Write the number of GPS fixes (real and actually sent) in a file
+        	 * located at the root of the external storage (sdcard)
+        	 * before closing the application
+        	 * @see android.view.View.OnClickListener#onClick(android.view.View)
+        	 */
 			public void onClick(View arg0) {
-//				System.exit(0);
+				String filename = "nb_GPS_fixes.txt";
+				String nbFixesString = Integer.toString(count)+", "+Integer.toString(gpsCount);
+				
+				try {
+				    File root = Environment.getExternalStorageDirectory();
+				    if (root.canWrite()){
+				        File f = new File(root, filename);
+				        FileWriter fwriter = new FileWriter(f);
+				        BufferedWriter out = new BufferedWriter(fwriter);
+				        out.write(nbFixesString);
+				        out.close();
+				    }
+				} catch (IOException e) {
+				    System.out.println("Could not write file " + e.getMessage());
+				}
+
+				// Close the program
+				System.exit(0);
 				finish();
 			}
         	
