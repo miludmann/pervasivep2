@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.widget;
+package com.tuto.location;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -22,7 +22,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.ImageButton;
 
-import com.example.R;
+import com.tuto.location.R;
 
 /**
  * This class exists purely to cancel long click events.

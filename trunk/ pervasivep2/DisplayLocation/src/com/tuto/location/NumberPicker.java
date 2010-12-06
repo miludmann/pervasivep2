@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.widget;
+package com.tuto.location;
 
 import android.content.Context;
 import android.os.Handler;
@@ -33,7 +33,7 @@ import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.widget.EditText;
 
-import com.example.R;
+import com.tuto.location.R;
 
 /**
  * This class has been pulled from the Android platform source code, its an internal widget that hasn't been
