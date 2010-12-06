@@ -43,7 +43,7 @@ public class DisplayLocation extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				System.exit(0);
+				finish();
 			}
         	
         });
@@ -68,35 +68,26 @@ public class DisplayLocation extends Activity {
             latString = "No location found";
             longString = "No location found";
         }
-         myLatText.setText(latString);
-         myLongText.setText(longString);
+        myLatText.setText(latString);
+		myLongText.setText(longString);
 	     
-         /**
-          * Communication with server
-          */
-	      String hostname = "camel04.cs.au.dk"; //camel04 : 130.225.16.123
-	      int port = 15340;
-//	      hostname = "84.238.67.223"; //Home PC
-	  	  TextView debug = (TextView)findViewById(R.id.TextView06);
-	      String msg = "unknown";	      
-	      Socket socket = new Socket();
-	      SocketAddress addr = new InetSocketAddress(hostname, port);
-	      try {
-		      	msg = "Connecting...";
-		      	debug.setText(msg);		      	
-				socket.connect(addr);				
-			    msg = "Connection ok";
-			    debug.setText(msg);	      	
-				OutputStream os = socket.getOutputStream();
-				DataOutputStream dos = new DataOutputStream(os);
-				dos.writeUTF("Distance,"+count+","+count+","+longString+","+latString);
-				dos.close();
-				socket.close();
-			} catch (IOException e) {
-				msg = "Connection failed ";
-		    	debug.setText(msg);
-				e.printStackTrace();
-			}
+		sendData("Distance,"+count+","+count+","+longString+","+latString);
+    }
+    
+    private void sendData(String data){
+		 /**
+		  * Communication with server
+		  */
+		 TextView debug = (TextView)findViewById(R.id.TextView06);
+		 String msg = "unknown";
+		 int status = GpsReader.sendDataToServer(data);
+		 if(status == 0){
+	 		msg = "Connection to server ok";
+		    debug.setText(msg);	 
+		 } else {
+			 msg = "Connection to server failed ";
+	 		 debug.setText(msg);
+		 }
     }
 
     private final LocationListener locationListener = new LocationListener() {
