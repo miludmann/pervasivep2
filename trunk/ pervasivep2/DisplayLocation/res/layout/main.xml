@@ -2,25 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
+	
+	
+
+ <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:textStyle="bold" android:text="GPS Reader method ?" />
+ <RadioGroup android:layout_width="fill_parent"
+ android:layout_height="wrap_content"
+ android:orientation="vertical"
+ android:id="@+id/QueGroup1">
+ <RadioButton android:checked="true"
+ android:id="@+id/periodic" android:text="Periodic"/>
+ <RadioButton android:checked="false"
+ android:id="@+id/distance" android:text="Distance"/>
+ </RadioGroup>
+
+	
+	
 	<TextView android:id="@+id/TextView01" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:text="Longitude: "></TextView>
+		android:layout_height="wrap_content" android:textStyle="bold" android:text="Longitude: "></TextView>
 	
 	<TextView android:id="@+id/TextView02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
 	
 	<TextView android:id="@+id/TextView03" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:text="Latitude: "></TextView>
+		android:layout_height="wrap_content" android:textStyle="bold" android:text="Latitude: "></TextView>
 	
 	<TextView android:id="@+id/TextView04" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
 	
 		<TextView android:id="@+id/TextView05" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:text="Status: "></TextView>
+		android:layout_height="wrap_content" android:textStyle="bold" android:text="Status: "></TextView>
 	
 	<TextView android:id="@+id/TextView06" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
 	
 	<TextView android:id="@+id/TextView07" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:text="Time period: "></TextView>
+		android:layout_height="wrap_content" android:textStyle="bold" android:text="Fix frequency: "></TextView>
 	
 	<TextView android:id="@+id/TextView08" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
+	
+		<TextView android:id="@+id/TextView09" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:textStyle="bold" android:text="Distance since last fix: "></TextView>
+	
+	<TextView android:id="@+id/TextView10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
 	
 	
 	<com.tuto.location.NumberPicker  android:id="@+id/nbp_button"
