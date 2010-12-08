@@ -26,17 +26,23 @@ import com.tuto.location.NumberPicker.OnChangedListener;
 public class DisplayLocation extends Activity {
 	protected Button closeApp;
 	protected NumberPicker nbp;
+	protected NumberPicker nbp2;
 	private int count;
 	private int gpsCount;
-	private enum state{periodic, distance, maxSpeed, accel};	
+	private enum state{periodic, distance, maxSpeed, accelerometer};	
 	private state m_state;
 	private long timeBetweenFixes;
 	private LocationManager locManager;
 	private long timeElapsed;
 	private Location oldLocation;
-	private int nbpValue; // Value in the spinbox
+	private int nbp1Value; // Value in the spinbox
+	private int nbp2Value; // Value in the spinbox
 	private float distanceBetweenFixes;
-	private RadioButton rb1, rb2;
+	private RadioButton rb1, rb2, rb3, rb4;
+	private float maxSpeed;
+	private TextView countValText;
+    private TextView gpsCountValText;
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,13 +51,22 @@ public class DisplayLocation extends Activity {
 
     	rb1=(RadioButton)findViewById(R.id.periodic);
     	rb2=(RadioButton)findViewById(R.id.distance);
+    	rb3=(RadioButton)findViewById(R.id.maxSpeed);
+    	rb4=(RadioButton)findViewById(R.id.accelerometer);
 
         closeApp = (Button) findViewById(R.id.my_button);
         
         nbp = (NumberPicker) findViewById(R.id.nbp_button);
         nbp.setRange(0, 3600);
-        nbp.setCurrent(0);
-
+        nbp.setCurrent(1);
+        
+        nbp2 = (NumberPicker) findViewById(R.id.nbp2_button);
+        nbp2.setRange(0, 80);
+        nbp2.setCurrent(10);
+        
+        countValText = (TextView)findViewById(R.id.TextCountVal);
+        gpsCountValText = (TextView)findViewById(R.id.TextGpsCountVal);
+        
         locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
         locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,timeBetweenFixes,0, locationListener);
         Location location = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -95,16 +110,33 @@ public class DisplayLocation extends Activity {
         	 * @see com.tuto.location.NumberPicker.OnChangedListener#onChanged(com.tuto.location.NumberPicker, int, int)
         	 */
         	public void onChanged(NumberPicker picker, int oldVal, int newVal) {
-				nbpValue = newVal;
+				nbp1Value = newVal;
 				if(m_state == state.periodic){
 					timeBetweenFixes = newVal * 1000;
 					time.setText(newVal+" second(s) between fixes");	
 					locManager.removeUpdates(locationListener);
 					locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,timeBetweenFixes,0, locationListener);
-				} else if(m_state == state.distance) {
+				} else if(m_state == state.distance || m_state == state.maxSpeed) {
 					distanceBetweenFixes = newVal;
 					time.setText(newVal+" meter(s) between fixes");	
 				}
+				
+			}       	
+        });
+        nbp2.setOnChangeListener(new OnChangedListener (){
+        	/*
+        	 * Handling the spinbox NumberPicker2
+        	 * @see com.tuto.location.NumberPicker.OnChangedListener#onChanged(com.tuto.location.NumberPicker, int, int)
+        	 */
+        	public void onChanged(NumberPicker picker, int oldVal, int newVal) {
+				nbp2Value = newVal;
+				if(m_state == state.maxSpeed){
+					maxSpeed = newVal;
+					time.setText("Min "+newVal+" s. between fixes");	
+					timeBetweenFixes = (long) (distanceBetweenFixes/maxSpeed) * 1000;
+					locManager.removeUpdates(locationListener);
+					locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,timeBetweenFixes,0, locationListener);
+				} 
 				
 			}       	
         });
@@ -116,8 +148,11 @@ public class DisplayLocation extends Activity {
 					boolean isChecked) {
 				if(isChecked){
 					m_state = state.periodic;
+					nbp.setCurrent(1);
+					timeBetweenFixes = nbp.getCurrent()*1000;
+					time.setText(nbp.getCurrent()+" second(s) between fixes");
 					locManager.removeUpdates(locationListener);
-					locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,nbpValue*1000,0, locationListener);
+					locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,timeBetweenFixes,0, locationListener);
 				}
 			}
         });
@@ -128,6 +163,39 @@ public class DisplayLocation extends Activity {
 					boolean isChecked) {
 				if(isChecked){
 					m_state = state.distance;
+					nbp.setCurrent(50);
+					distanceBetweenFixes = nbp.getCurrent();
+					time.setText(distanceBetweenFixes+" meter(s) between fixes");
+					locManager.removeUpdates(locationListener);
+					locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, locationListener);
+				}
+			}
+        });
+        rb3.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				if(isChecked){
+					m_state = state.maxSpeed;
+					nbp.setCurrent(50);
+					distanceBetweenFixes = nbp.getCurrent();
+					nbp2.setCurrent(10);
+					maxSpeed = nbp2.getCurrent();
+					timeBetweenFixes = (long) (distanceBetweenFixes/maxSpeed) * 1000;
+					time.setText("Min "+nbp2.getCurrent()+" s. between fixes");	
+					locManager.removeUpdates(locationListener);
+					locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,timeBetweenFixes,0, locationListener);
+				}
+			}
+        });
+        rb4.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				if(isChecked){
+					m_state = state.accelerometer;
 					locManager.removeUpdates(locationListener);
 					locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, locationListener);
 				}
@@ -139,10 +207,11 @@ public class DisplayLocation extends Activity {
     	 count = 0;
     	 gpsCount = 0;
          m_state = state.periodic;
-         timeBetweenFixes = 0;
+         timeBetweenFixes = 1;
          timeElapsed = SystemClock.elapsedRealtime();
          oldLocation = null;
-         distanceBetweenFixes = 0F;
+         distanceBetweenFixes = 50F;
+         maxSpeed = 10F;
     }
 
     private void updateWithNewLocation(Location location) {
@@ -170,8 +239,40 @@ public class DisplayLocation extends Activity {
 			readPeriodic(longString, latString);
 		if(m_state == state.distance)
 			readDistance(location);
+		if(m_state == state.maxSpeed)
+			readMaxSpeed(location);
+		if(m_state == state.accelerometer)
+			readAccelerometer(location);
     }
     
+	private void readAccelerometer(Location location) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void readMaxSpeed(Location newLocation) {
+		float distance = 0F;
+		if(oldLocation != null && newLocation != null)
+		{
+			TextView distText = (TextView)findViewById(R.id.TextView10);
+			distance = newLocation.distanceTo(oldLocation);
+			distText.setText(distance+" meter(s)");
+		}
+		if((distance >= distanceBetweenFixes || oldLocation == null) && newLocation != null) // OK, we are done for this fix, proceed
+		{
+			count++; // counter of gps fix actually sent
+			countValText.setText(Integer.toString(count));
+			sendData("MaxSpeed,"+count+","+gpsCount+","+newLocation.getLongitude()+","+newLocation.getLatitude());
+			oldLocation = newLocation;
+			// Resume procedure : no fix until having reached the estimated distance
+			locManager.removeUpdates(locationListener);
+			locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,timeBetweenFixes,0, locationListener);
+		} else { // We have just reached the point where we have to start looking for fixes until reaching the good distance
+			locManager.removeUpdates(locationListener);
+			locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, locationListener);
+		}
+	}
+
 	private void readDistance(Location newLocation) {
 		float distance = 0F;
 		if(oldLocation != null && newLocation != null)
@@ -179,12 +280,11 @@ public class DisplayLocation extends Activity {
 			TextView distText = (TextView)findViewById(R.id.TextView10);
 			distance = newLocation.distanceTo(oldLocation);
 			distText.setText(distance+" meter(s)");
-		} else if(newLocation != null){ //First fix since the program has started
-			oldLocation = newLocation;
 		}
-		if(distance >= distanceBetweenFixes)
+		if((distance >= distanceBetweenFixes || oldLocation == null) && newLocation != null) //Send also first fix since the program has started
 		{
 			count++; // counter of gps fix actually sent
+			countValText.setText(Integer.toString(count));
 			sendData("Distance,"+count+","+gpsCount+","+newLocation.getLongitude()+","+newLocation.getLatitude());
 			oldLocation = newLocation;
 		}
@@ -194,8 +294,9 @@ public class DisplayLocation extends Activity {
 		if(SystemClock.elapsedRealtime() - timeElapsed >= timeBetweenFixes)
 		{
 			count++; // counter of gps fix actually sent
+			countValText.setText(Integer.toString(count));
 			timeElapsed = SystemClock.elapsedRealtime();
-			sendData("Distance,"+count+","+gpsCount+","+lng+","+lat);
+			sendData("Periodic,"+count+","+gpsCount+","+lng+","+lat);
 		}
 	}
 
@@ -218,6 +319,7 @@ public class DisplayLocation extends Activity {
     private final LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
         	gpsCount++;
+        	gpsCountValText.setText(Integer.toString(gpsCount));
             updateWithNewLocation(location);
         }
 
