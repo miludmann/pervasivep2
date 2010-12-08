@@ -42,6 +42,7 @@ public class DisplayLocation extends Activity {
 	private float maxSpeed;
 	private TextView countValText;
     private TextView gpsCountValText;
+    private boolean distTilCheckPointReached;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -116,11 +117,14 @@ public class DisplayLocation extends Activity {
 					time.setText(newVal+" second(s) between fixes");	
 					locManager.removeUpdates(locationListener);
 					locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,timeBetweenFixes,0, locationListener);
-				} else if(m_state == state.distance || m_state == state.maxSpeed) {
+				} else if(m_state == state.distance) {
 					distanceBetweenFixes = newVal;
 					time.setText(newVal+" meter(s) between fixes");	
-				}
-				
+				} else if(m_state == state.maxSpeed){
+					distanceBetweenFixes = newVal;
+					long timeBetweenFixesSeconds = (long) (distanceBetweenFixes/maxSpeed);
+					timeBetweenFixes = timeBetweenFixesSeconds * 1000;
+					time.setText("Min "+timeBetweenFixesSeconds+" s. between fixes");					}
 			}       	
         });
         nbp2.setOnChangeListener(new OnChangedListener (){
@@ -132,8 +136,9 @@ public class DisplayLocation extends Activity {
 				nbp2Value = newVal;
 				if(m_state == state.maxSpeed){
 					maxSpeed = newVal;
-					time.setText("Min "+newVal+" s. between fixes");	
-					timeBetweenFixes = (long) (distanceBetweenFixes/maxSpeed) * 1000;
+					long timeBetweenFixesSeconds = (long) (distanceBetweenFixes/maxSpeed);
+					timeBetweenFixes = timeBetweenFixesSeconds * 1000;
+					time.setText("Min "+timeBetweenFixesSeconds+" s. between fixes");	
 					locManager.removeUpdates(locationListener);
 					locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,timeBetweenFixes,0, locationListener);
 				} 
@@ -182,8 +187,9 @@ public class DisplayLocation extends Activity {
 					distanceBetweenFixes = nbp.getCurrent();
 					nbp2.setCurrent(10);
 					maxSpeed = nbp2.getCurrent();
-					timeBetweenFixes = (long) (distanceBetweenFixes/maxSpeed) * 1000;
-					time.setText("Min "+nbp2.getCurrent()+" s. between fixes");	
+					long timeBetweenFixesSeconds = (long) (distanceBetweenFixes/maxSpeed);
+					timeBetweenFixes = timeBetweenFixesSeconds * 1000;
+					time.setText("Min "+timeBetweenFixesSeconds+" s. between fixes");					
 					locManager.removeUpdates(locationListener);
 					locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,timeBetweenFixes,0, locationListener);
 				}
@@ -212,9 +218,17 @@ public class DisplayLocation extends Activity {
          oldLocation = null;
          distanceBetweenFixes = 50F;
          maxSpeed = 10F;
+         distTilCheckPointReached = false;
     }
 
     private void updateWithNewLocation(Location location) {
+//    	if(location != null && m_state == state.maxSpeed && !distTilCheckPointReached)
+//    	{
+//			locManager.removeUpdates(locationListener); // we do not want more than one GPS fix
+//    	}
+    	gpsCount++;
+    	gpsCountValText.setText(Integer.toString(gpsCount));
+    	
         TextView myLatText = (TextView)findViewById(R.id.TextView04);
         TextView myLongText = (TextView)findViewById(R.id.TextView02);
 
@@ -262,12 +276,15 @@ public class DisplayLocation extends Activity {
 		{
 			count++; // counter of gps fix actually sent
 			countValText.setText(Integer.toString(count));
+			timeElapsed = SystemClock.elapsedRealtime();
 			sendData("MaxSpeed,"+count+","+gpsCount+","+newLocation.getLongitude()+","+newLocation.getLatitude());
 			oldLocation = newLocation;
 			// Resume procedure : no fix until having reached the estimated distance
 			locManager.removeUpdates(locationListener);
 			locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,timeBetweenFixes,0, locationListener);
-		} else { // We have just reached the point where we have to start looking for fixes until reaching the good distance
+			distTilCheckPointReached = false;
+		} else if(SystemClock.elapsedRealtime() - timeElapsed >= timeBetweenFixes && !distTilCheckPointReached){ // We have just reached the point where we have to start looking for fixes until reaching the good distance
+			distTilCheckPointReached = true;
 			locManager.removeUpdates(locationListener);
 			locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, locationListener);
 		}
@@ -318,8 +335,6 @@ public class DisplayLocation extends Activity {
 
     private final LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
-        	gpsCount++;
-        	gpsCountValText.setText(Integer.toString(gpsCount));
             updateWithNewLocation(location);
         }
 
