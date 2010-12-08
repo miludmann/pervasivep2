@@ -6,51 +6,120 @@
 	
 
  <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:textStyle="bold" android:text="GPS Reader method ?" />
- <RadioGroup android:layout_width="fill_parent"
- android:layout_height="wrap_content"
- android:orientation="vertical"
- android:id="@+id/QueGroup1">
- <RadioButton android:checked="true"
- android:id="@+id/periodic" android:text="Periodic"/>
- <RadioButton android:checked="false"
- android:id="@+id/distance" android:text="Distance"/>
+ <LinearLayout
+	      android:orientation="horizontal"
+	      android:layout_width="fill_parent"
+	      android:layout_height="fill_parent"
+	      android:layout_weight="1">
+	      
+ <RadioGroup android:layout_width="match_parent"
+	 android:layout_height="wrap_content"
+	 android:orientation="vertical"
+	 android:layout_weight="1"
+	 android:id="@+id/QueGroup1">
+		 <RadioButton android:checked="true"
+		 android:id="@+id/periodic" android:text="Periodic" 
+		 android:layout_width="wrap_content" android:layout_height="wrap_content" />
+		 <RadioButton android:checked="false"
+		 android:id="@+id/distance" android:text="Distance"
+		 android:layout_width="wrap_content" android:layout_height="wrap_content" />
+		 <RadioButton android:checked="false"
+		 android:id="@+id/maxSpeed" android:text="Maximum speed"
+		 android:layout_width="wrap_content" android:layout_height="wrap_content" />
+		 <RadioButton android:checked="false"
+		 android:id="@+id/accelerometer" android:text="Accelerometer"
+		 android:layout_width="wrap_content" android:layout_height="wrap_content" />
  </RadioGroup>
 
-	
-	
-	<TextView android:id="@+id/TextView01" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:textStyle="bold" android:text="Longitude: "></TextView>
-	
-	<TextView android:id="@+id/TextView02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
-	
-	<TextView android:id="@+id/TextView03" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:textStyle="bold" android:text="Latitude: "></TextView>
-	
-	<TextView android:id="@+id/TextView04" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
-	
-		<TextView android:id="@+id/TextView05" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:textStyle="bold" android:text="Status: "></TextView>
-	
-	<TextView android:id="@+id/TextView06" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
-	
-	<TextView android:id="@+id/TextView07" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:textStyle="bold" android:text="Fix frequency: "></TextView>
-	
-	<TextView android:id="@+id/TextView08" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
-	
-		<TextView android:id="@+id/TextView09" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:textStyle="bold" android:text="Distance since last fix: "></TextView>
-	
-	<TextView android:id="@+id/TextView10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
-	
-	
-	<com.tuto.location.NumberPicker  android:id="@+id/nbp_button"
-	android:layout_width="wrap_content" android:layout_height="wrap_content"
-	></com.tuto.location.NumberPicker>
+	 <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:layout_weight="1"
+      android:gravity="right">
+	      <LinearLayout
+	      android:orientation="vertical"
+	      android:layout_width="fill_parent"
+	      android:layout_height="fill_parent"
+	      android:layout_weight="1"
+	      android:gravity="center_vertical">
+			<TextView android:id="@+id/nbp_title01" android:layout_width="fill_parent" android:gravity="center"
+					android:layout_height="wrap_content" android:textStyle="bold" android:text="Frequency "></TextView>
+			<com.tuto.location.NumberPicker  android:id="@+id/nbp_button"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			></com.tuto.location.NumberPicker>
+		 </LinearLayout>
+		 <LinearLayout
+	      android:orientation="vertical"
+	      android:layout_width="fill_parent"
+	      android:layout_height="fill_parent"
+	      android:layout_weight="1"
+	      android:gravity="center_vertical">
+   			<TextView android:id="@+id/nbp_title02" android:layout_width="fill_parent" android:gravity="center"
+			android:layout_height="wrap_content" android:textStyle="bold" android:text="Speed"></TextView>
+			<com.tuto.location.NumberPicker  android:id="@+id/nbp2_button"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			></com.tuto.location.NumberPicker>
+		</LinearLayout>
+		
+	 </LinearLayout>
+</LinearLayout>
+  <LinearLayout
+     android:orientation="horizontal"
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent"
+     android:layout_weight="1">
+     
+	     <LinearLayout
+	      android:orientation="vertical"
+	      android:layout_width="fill_parent"
+	      android:layout_height="fill_parent"
+	      android:layout_weight="1">
+			<TextView android:id="@+id/TextView01" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:textStyle="bold" android:text="Longitude: "></TextView>
+			<TextView android:id="@+id/TextView02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
+			
+			<TextView android:id="@+id/TextView03" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:textStyle="bold" android:text="Latitude: "></TextView>
+			<TextView android:id="@+id/TextView04" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
+			
+			<TextView android:id="@+id/TextView05" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:textStyle="bold" android:text="Status: "></TextView>
+			<TextView android:id="@+id/TextView06" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
+		    <TextView android:id="@+id/TextCount" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:textStyle="bold" android:text="Fixes sent: "></TextView>
+			<TextView android:id="@+id/TextCountVal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
+		 
+		 </LinearLayout>
+		 <LinearLayout
+	      android:orientation="vertical"
+	      android:layout_width="fill_parent"
+	      android:layout_height="fill_parent"
+	      android:layout_weight="1">
+			<TextView android:id="@+id/TextView07" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:textStyle="bold" android:text="Fix frequency: "></TextView>
+			<TextView android:id="@+id/TextView08" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
+			
+			<TextView android:id="@+id/TextView09" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:textStyle="bold" android:text="Distance since last fix: "></TextView>
+			<TextView android:id="@+id/TextView10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
+			
+			<TextView android:id="@+id/TextView11" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:textStyle="bold" android:text="Accelerometer status: "></TextView>
+			<TextView android:id="@+id/TextView12" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
+			<TextView android:id="@+id/TextGpsCount" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:textStyle="bold" android:text="Actual fixes: "></TextView>
+			<TextView android:id="@+id/TextGpsCountVal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
+		 
+		</LinearLayout>
+	</LinearLayout>
 	
 	<Button  android:id="@+id/my_button"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:text="Close App"></Button>
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:text="Close App">
+	</Button>
 
 
 </LinearLayout>
