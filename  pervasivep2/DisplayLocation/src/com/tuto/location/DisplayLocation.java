@@ -19,11 +19,12 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.tuto.location.NumberPicker.OnChangedListener;
 
-public class DisplayLocation extends Activity {
+public class DisplayLocation extends Activity implements AccelerometerListener{
 	protected Button closeApp;
 	protected NumberPicker nbp;
 	protected NumberPicker nbp2;
@@ -43,6 +44,13 @@ public class DisplayLocation extends Activity {
 	private TextView countValText;
     private TextView gpsCountValText;
     private boolean distTilCheckPointReached;
+    private static Context CONTEXT;
+    private int nbSamples = 500;
+    private int valueSampled = 0;
+    private float valueG = 0;
+    private boolean isMoving;
+    private long tTot, tTmp, tStreak;
+    private int strength, strenghtIn, strenghtOut = 10;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -117,7 +125,7 @@ public class DisplayLocation extends Activity {
 					time.setText(newVal+" second(s) between fixes");	
 					locManager.removeUpdates(locationListener);
 					locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,timeBetweenFixes,0, locationListener);
-				} else if(m_state == state.distance) {
+				} else if(m_state == state.distance || m_state == state.accelerometer) {
 					distanceBetweenFixes = newVal;
 					time.setText(newVal+" meter(s) between fixes");	
 				} else if(m_state == state.maxSpeed){
@@ -152,6 +160,7 @@ public class DisplayLocation extends Activity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if(isChecked){
+					stopAccelerometer();
 					m_state = state.periodic;
 					nbp.setCurrent(1);
 					timeBetweenFixes = nbp.getCurrent()*1000;
@@ -167,6 +176,7 @@ public class DisplayLocation extends Activity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if(isChecked){
+					stopAccelerometer();
 					m_state = state.distance;
 					nbp.setCurrent(50);
 					distanceBetweenFixes = nbp.getCurrent();
@@ -182,6 +192,7 @@ public class DisplayLocation extends Activity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if(isChecked){
+					stopAccelerometer();
 					m_state = state.maxSpeed;
 					nbp.setCurrent(50);
 					distanceBetweenFixes = nbp.getCurrent();
@@ -201,15 +212,31 @@ public class DisplayLocation extends Activity {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if(isChecked){
+	                onResume(); // start listening to Accelerometer sensor
 					m_state = state.accelerometer;
+					nbp.setCurrent(50);
+					distanceBetweenFixes = nbp.getCurrent();
+					time.setText(distanceBetweenFixes+" meter(s) between fixes");
 					locManager.removeUpdates(locationListener);
-					locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, locationListener);
 				}
 			}
         });
       }
-	      
+
+    public void stopAccelerometer()
+    {
+    	if (AccelerometerManager.isListening()) {
+    		AccelerometerManager.stopListening();
+    	}
+    	((TextView) findViewById(R.id.accelerometer1)).setText(String.valueOf("Accelerometer sensor is"));
+        ((TextView) findViewById(R.id.accelerometer2)).setText(String.valueOf("OFF"));
+    }
+    public static Context getContext() {
+        return CONTEXT;
+    }
+    
     public void init(){
+         CONTEXT = this;
     	 count = 0;
     	 gpsCount = 0;
          m_state = state.periodic;
@@ -219,6 +246,9 @@ public class DisplayLocation extends Activity {
          distanceBetweenFixes = 50F;
          maxSpeed = 10F;
          distTilCheckPointReached = false;
+         setTTot(0);
+         setStrenght(5);
+//         stopAccelerometer();
     }
 
     private void updateWithNewLocation(Location location) {
@@ -256,12 +286,15 @@ public class DisplayLocation extends Activity {
 		if(m_state == state.maxSpeed)
 			readMaxSpeed(location);
 		if(m_state == state.accelerometer)
-			readAccelerometer(location);
+			readDistance(location);
     }
     
-	private void readAccelerometer(Location location) {
-		// TODO Auto-generated method stub
-		
+	private void readAccelerometer() {
+		if(isMoving){
+			locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, locationListener);
+		} else {
+			locManager.removeUpdates(locationListener);
+		}
 	}
 
 	private void readMaxSpeed(Location newLocation) {
@@ -348,6 +381,108 @@ public class DisplayLocation extends Activity {
         public void onStatusChanged(String provider, int status, Bundle extras) {
         }
     };
+
+
+	@Override
+	public void onAccelerationChanged(float x, float y, float z) {
+        
+        double norm = Math.sqrt(x*x+y*y+z*z);
+        
+        
+        if ( valueSampled < nbSamples )
+        {
+                valueG = (float) ((valueG*valueSampled+norm)/(valueSampled+1));
+                valueSampled++;
+        }
+        else
+        {
+                //((TextView) findViewById(R.id.n)).setText(String.valueOf(valueG));
+//                ((TextView) findViewById(R.id.n)).setText(String.valueOf(norm));
+                ((TextView) findViewById(R.id.accelerometer1)).setText(String.valueOf(isMoving));
+                readAccelerometer();
+                if ( Math.abs(norm-valueG) > 0.2 )
+                {
+                        //count++;
+                        
+                        if ( ! isMoving )
+                        {
+                                if ( strenghtIn == 0 )
+                                {
+                                        isMoving = true;
+                                        strenghtIn = getStrenght();
+                                        tTmp = System.currentTimeMillis();
+                                }
+                                else
+                                {
+                                        strenghtIn--;
+                                }
+                        }
+                        
+                        strenghtOut = getStrenght();
+                }
+                else
+                {
+                        if ( isMoving )
+                        {
+                                tStreak = System.currentTimeMillis() - tTmp;
+
+                                ((TextView) findViewById(R.id.accelerometer2)).setText(String.valueOf(tTot+tStreak + ", " + tStreak));
+                                
+                                if ( strenghtOut == 0 )
+                                {
+                                        isMoving = false;
+                                        tTot = tTot + tStreak;
+                                }
+                                else
+                                {
+                                        strenghtOut--;
+                                }
+                        }
+                }
+        }
+	}
+
+	protected void onResume() {
+        super.onResume();
+        if (AccelerometerManager.isSupported() && rb4.isChecked()) {
+                AccelerometerManager.startListening(this);
+                ((TextView) findViewById(R.id.accelerometer1)).setText(String.valueOf("Accelerometer sensor is"));
+                ((TextView) findViewById(R.id.accelerometer2)).setText(String.valueOf("ON"));
+        }
+    }
+    
+    protected void onDestroy() {
+        super.onDestroy();
+        if (AccelerometerManager.isListening()) {
+                AccelerometerManager.stopListening();
+        }
+
+    }
+	
+	public long getTTot() {
+		return this.tTot;
+    }
+    
+    public void setTTot(long t){
+        this.tTot = t;
+    }
+    
+    public int getStrenght() {
+    	return this.strength;
+    }
+    
+    public void setStrenght(int i){
+        this.strength = i;
+    }
+    
+    public boolean getIsMoving() {
+    	return this.isMoving;
+    }
+        
+	@Override
+	public void onShake(float force) {
+        Toast.makeText(this, "Phone shaked : " + force, 1000).show();		
+	}
 
 
 
