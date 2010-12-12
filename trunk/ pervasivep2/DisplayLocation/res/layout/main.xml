@@ -106,7 +106,8 @@
 			
 			<TextView android:id="@+id/TextView11" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:textStyle="bold" android:text="Accelerometer status: "></TextView>
-			<TextView android:id="@+id/TextView12" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
+			<TextView android:id="@+id/accelerometer1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
+			<TextView android:id="@+id/accelerometer2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>
 			<TextView android:id="@+id/TextGpsCount" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:textStyle="bold" android:text="Actual fixes: "></TextView>
 			<TextView android:id="@+id/TextGpsCountVal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="unknown"></TextView>

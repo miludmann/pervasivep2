@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:xal="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0">
+
+	<Document>
+		<description>GPS Scenarios for the Computer Science course Pervasive Positioning</description>
+		<Style id="redLineGreenPoly">
+			<LineStyle>
+				<color>7f0000ff</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>7fff0000</color>
+			</PolyStyle>
+		</Style>
+		<Placemark>
+			<name>GPS fix at: 19:48:56 on 12-12-2010</name>
+			<description>GPS fix 1, of 1 total<br/> From: 10.181874632835388,56.1652797460556<br/>To:   10.181874632835388,56.1652797460556</description>
+			<TimeStamp>
+				<when>19:48:56 on 12-12-2010</when>
+			</TimeStamp>
+			<styleUrl>#redLineGreenPoly</styleUrl>
+			<LineString>
+				<extrude>1</extrude>
+				<tessellate>1</tessellate>
+				<altitudeMode>clampToGround</altitudeMode>
+				<coordinates>
+					10.181874632835388,56.1652797460556
+					10.181874632835388,56.1652797460556
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>GPS fix at: 19:49:31 on 12-12-2010</name>
+			<description>GPS fix 2, of 37 total<br/> From: 10.181874632835388,56.1652797460556<br/>To:   10.181965827941895,56.165746450424194</description>
+			<TimeStamp>
+				<when>19:49:31 on 12-12-2010</when>
+			</TimeStamp>
+			<styleUrl>#redLineGreenPoly</styleUrl>
+			<LineString>
+				<extrude>1</extrude>
+				<tessellate>1</tessellate>
+				<altitudeMode>clampToGround</altitudeMode>
+				<coordinates>
+					10.181874632835388,56.1652797460556
+					10.181965827941895,56.165746450424194
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>GPS fix at: 19:50:21 on 12-12-2010</name>
+			<description>GPS fix 3, of 86 total<br/> From: 10.181965827941895,56.165746450424194<br/>To:   10.182121396064758,56.166223883628845</description>
+			<TimeStamp>
+				<when>19:50:21 on 12-12-2010</when>
+			</TimeStamp>
+			<styleUrl>#redLineGreenPoly</styleUrl>
+			<LineString>
+				<extrude>1</extrude>
+				<tessellate>1</tessellate>
+				<altitudeMode>clampToGround</altitudeMode>
+				<coordinates>
+					10.181965827941895,56.165746450424194
+					10.182121396064758,56.166223883628845
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>GPS fix at: 19:50:50 on 12-12-2010</name>
+			<description>GPS fix 4, of 115 total<br/> From: 10.182121396064758,56.166223883628845<br/>To:   10.182276964187622,56.16667449474335</description>
+			<TimeStamp>
+				<when>19:50:50 on 12-12-2010</when>
+			</TimeStamp>
+			<styleUrl>#redLineGreenPoly</styleUrl>
+			<LineString>
+				<extrude>1</extrude>
+				<tessellate>1</tessellate>
+				<altitudeMode>clampToGround</altitudeMode>
+				<coordinates>
+					10.182121396064758,56.166223883628845
+					10.182276964187622,56.16667449474335
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>GPS fix at: 19:51:22 on 12-12-2010</name>
+			<description>GPS fix 5, of 147 total<br/> From: 10.182276964187622,56.16667449474335<br/>To:   10.182443261146545,56.16711437702179</description>
+			<TimeStamp>
+				<when>19:51:22 on 12-12-2010</when>
+			</TimeStamp>
+			<styleUrl>#redLineGreenPoly</styleUrl>
+			<LineString>
+				<extrude>1</extrude>
+				<tessellate>1</tessellate>
+				<altitudeMode>clampToGround</altitudeMode>
+				<coordinates>
+					10.182276964187622,56.16667449474335
+					10.182443261146545,56.16711437702179
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>GPS fix at: 19:51:57 on 12-12-2010</name>
+			<description>GPS fix 6, of 182 total<br/> From: 10.182443261146545,56.16711437702179<br/>To:   10.18257200717926,56.16755962371826</description>
+			<TimeStamp>
+				<when>19:51:57 on 12-12-2010</when>
+			</TimeStamp>
+			<styleUrl>#redLineGreenPoly</styleUrl>
+			<LineString>
+				<extrude>1</extrude>
+				<tessellate>1</tessellate>
+				<altitudeMode>clampToGround</altitudeMode>
+				<coordinates>
+					10.182443261146545,56.16711437702179
+					10.18257200717926,56.16755962371826
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>GPS fix at: 19:52:27 on 12-12-2010</name>
+			<description>GPS fix 7, of 212 total<br/> From: 10.18257200717926,56.16755962371826<br/>To:   10.182722210884094,56.168004870414734</description>
+			<TimeStamp>
+				<when>19:52:27 on 12-12-2010</when>
+			</TimeStamp>
+			<styleUrl>#redLineGreenPoly</styleUrl>
+			<LineString>
+				<extrude>1</extrude>
+				<tessellate>1</tessellate>
+				<altitudeMode>clampToGround</altitudeMode>
+				<coordinates>
+					10.18257200717926,56.16755962371826
+					10.182722210884094,56.168004870414734
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>GPS fix at: 19:53:24 on 12-12-2010</name>
+			<description>GPS fix 8, of 269 total<br/> From: 10.182722210884094,56.168004870414734<br/>To:   10.18231451511383,56.16840183734894</description>
+			<TimeStamp>
+				<when>19:53:24 on 12-12-2010</when>
+			</TimeStamp>
+			<styleUrl>#redLineGreenPoly</styleUrl>
+			<LineString>
+				<extrude>1</extrude>
+				<tessellate>1</tessellate>
+				<altitudeMode>clampToGround</altitudeMode>
+				<coordinates>
+					10.182722210884094,56.168004870414734
+					10.18231451511383,56.16840183734894
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>GPS fix at: 19:53:58 on 12-12-2010</name>
+			<description>GPS fix 9, of 303 total<br/> From: 10.18231451511383,56.16840183734894<br/>To:   10.181488394737244,56.168471574783325</description>
+			<TimeStamp>
+				<when>19:53:58 on 12-12-2010</when>
+			</TimeStamp>
+			<styleUrl>#redLineGreenPoly</styleUrl>
+			<LineString>
+				<extrude>1</extrude>
+				<tessellate>1</tessellate>
+				<altitudeMode>clampToGround</altitudeMode>
+				<coordinates>
+					10.18231451511383,56.16840183734894
+					10.181488394737244,56.168471574783325
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>GPS fix at: 19:54:57 on 12-12-2010</name>
+			<description>GPS fix 10, of 358 total<br/> From: 10.181488394737244,56.168471574783325<br/>To:   10.181134343147278,56.168053150177</description>
+			<TimeStamp>
+				<when>19:54:57 on 12-12-2010</when>
+			</TimeStamp>
+			<styleUrl>#redLineGreenPoly</styleUrl>
+			<LineString>
+				<extrude>1</extrude>
+				<tessellate>1</tessellate>
+				<altitudeMode>clampToGround</altitudeMode>
+				<coordinates>
+					10.181488394737244,56.168471574783325
+					10.181134343147278,56.168053150177
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>GPS fix at: 19:55:25 on 12-12-2010</name>
+			<description>GPS fix 11, of 390 total<br/> From: 10.181134343147278,56.168053150177<br/>To:   10.18105924129486,56.1676025390625</description>
+			<TimeStamp>
+				<when>19:55:25 on 12-12-2010</when>
+			</TimeStamp>
+			<styleUrl>#redLineGreenPoly</styleUrl>
+			<LineString>
+				<extrude>1</extrude>
+				<tessellate>1</tessellate>
+				<altitudeMode>clampToGround</altitudeMode>
+				<coordinates>
+					10.181134343147278,56.168053150177
+					10.18105924129486,56.1676025390625
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>GPS fix at: 19:55:56 on 12-12-2010</name>
+			<description>GPS fix 12, of 420 total<br/> From: 10.18105924129486,56.1676025390625<br/>To:   10.180973410606384,56.16714656352997</description>
+			<TimeStamp>
+				<when>19:55:56 on 12-12-2010</when>
+			</TimeStamp>
+			<styleUrl>#redLineGreenPoly</styleUrl>
+			<LineString>
+				<extrude>1</extrude>
+				<tessellate>1</tessellate>
+				<altitudeMode>clampToGround</altitudeMode>
+				<coordinates>
+					10.18105924129486,56.1676025390625
+					10.180973410606384,56.16714656352997
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>GPS fix at: 19:56:37 on 12-12-2010</name>
+			<description>GPS fix 13, of 453 total<br/> From: 10.180973410606384,56.16714656352997<br/>To:   10.180876851081848,56.16669058799744</description>
+			<TimeStamp>
+				<when>19:56:37 on 12-12-2010</when>
+			</TimeStamp>
+			<styleUrl>#redLineGreenPoly</styleUrl>
+			<LineString>
+				<extrude>1</extrude>
+				<tessellate>1</tessellate>
+				<altitudeMode>clampToGround</altitudeMode>
+				<coordinates>
+					10.180973410606384,56.16714656352997
+					10.180876851081848,56.16669058799744
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>GPS fix at: 19:57:37 on 12-12-2010</name>
+			<description>GPS fix 14, of 518 total<br/> From: 10.180876851081848,56.16669058799744<br/>To:   10.181306004524231,56.16629898548126</description>
+			<TimeStamp>
+				<when>19:57:37 on 12-12-2010</when>
+			</TimeStamp>
+			<styleUrl>#redLineGreenPoly</styleUrl>
+			<LineString>
+				<extrude>1</extrude>
+				<tessellate>1</tessellate>
+				<altitudeMode>clampToGround</altitudeMode>
+				<coordinates>
+					10.180876851081848,56.16669058799744
+					10.181306004524231,56.16629898548126
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>GPS fix at: 19:59:02 on 12-12-2010</name>
+			<description>GPS fix 16, of 606 total<br/> From: 10.181306004524231,56.16629898548126<br/>To:   10.181783437728882,56.16557478904724</description>
+			<TimeStamp>
+				<when>19:59:02 on 12-12-2010</when>
+			</TimeStamp>
+			<styleUrl>#redLineGreenPoly</styleUrl>
+			<LineString>
+				<extrude>1</extrude>
+				<tessellate>1</tessellate>
+				<altitudeMode>clampToGround</altitudeMode>
+				<coordinates>
+					10.181306004524231,56.16629898548126
+					10.181783437728882,56.16557478904724
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<name>0Distance</name>
+	</Document>
+</kml>
