@@ -5,7 +5,7 @@
 		<description>GPS Scenarios for the Computer Science course Pervasive Positioning</description>
 		<Style id="redLineGreenPoly">
 			<LineStyle>
-				<color>7f0000ff</color>
+				<color>7fff0000</color>
 				<width>4</width>
 			</LineStyle>
 			<PolyStyle>
